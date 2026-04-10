@@ -2,6 +2,8 @@
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import json
 
@@ -34,9 +36,22 @@ def create_app() -> FastAPI:
     graph_path = base_dir / settings.graphify_output_dir / "graph.json"
     graph_engine = GraphEngine(graph_path)
 
+    # Mount frontend static files
+    frontend_dist = base_dir.parent / "frontend" / "dist"
+    if frontend_dist.exists():
+        app.mount(
+            "/assets",
+            StaticFiles(directory=str(frontend_dist / "assets")),
+            name="assets",
+        )
+
     @app.get("/")
     async def root():
-        """Root endpoint"""
+        """Root endpoint - serve frontend if available"""
+        if frontend_dist.exists():
+            index_path = frontend_dist / "index.html"
+            if index_path.exists():
+                return FileResponse(index_path)
         return {
             "name": "Knowledge Platform API",
             "version": settings.api_version,
@@ -112,6 +127,16 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=404, detail="No report found")
 
         return {"report": report_path.read_text()}
+
+    # SPA fallback - serve index.html for any unknown path
+    @app.get("/{full_path:path}")
+    async def spa_fallback(full_path: str):
+        """Serve frontend for SPA routing"""
+        if frontend_dist.exists():
+            index_path = frontend_dist / "index.html"
+            if index_path.exists():
+                return FileResponse(index_path)
+        raise HTTPException(status_code=404, detail="Not found")
 
     return app
 

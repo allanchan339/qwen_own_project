@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: '/graph',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -57,42 +57,42 @@ export interface PathResult {
 
 export const graphApi = {
   getStats: async (): Promise<GraphStats> => {
-    const response = await api.get<GraphStats>('/graph/stats')
+    const response = await api.get<GraphStats>('/stats')
     return response.data
   },
 
   getNodes: async (limit: number = 100): Promise<Node[]> => {
-    const response = await api.get<Node[]>('/graph/nodes', { params: { limit } })
+    const response = await api.get<Node[]>('/nodes', { params: { limit } })
     return response.data
   },
 
   getEdges: async (limit: number = 100): Promise<Edge[]> => {
-    const response = await api.get<Edge[]>('/graph/edges', { params: { limit } })
+    const response = await api.get<Edge[]>('/edges', { params: { limit } })
     return response.data
   },
 
   getCommunities: async (): Promise<Community[]> => {
-    const response = await api.get<Community[]>('/graph/communities')
+    const response = await api.get<Community[]>('/communities')
     return response.data
   },
 
   getGodNodes: async (topK: number = 10): Promise<GodNode[]> => {
-    const response = await api.get<GodNode[]>('/graph/god-nodes', { params: { top_k: topK } })
+    const response = await api.get<GodNode[]>('/god-nodes', { params: { top_k: topK } })
     return response.data
   },
 
   getNodeNeighbors: async (nodeId: string, maxDepth: number = 3): Promise<any> => {
-    const response = await api.get(`/graph/node/${nodeId}/neighbors`, { params: { max_depth: maxDepth } })
+    const response = await api.get(`/node/${nodeId}/neighbors`, { params: { max_depth: maxDepth } })
     return response.data
   },
 
   findPath: async (fromNode: string, toNode: string): Promise<PathResult> => {
-    const response = await api.get<PathResult>('/graph/path', { params: { from_node: fromNode, to_node: toNode } })
+    const response = await api.get<PathResult>('/path', { params: { from_node: fromNode, to_node: toNode } })
     return response.data
   },
 
   getReport: async (): Promise<{ report: string }> => {
-    const response = await api.get('/graph/report')
+    const response = await api.get('/report')
     return response.data
   },
 }

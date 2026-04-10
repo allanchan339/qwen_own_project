@@ -35,36 +35,30 @@ knowledge-platform/
 
 ## Quick Start
 
-### Option 1: Use the Start Script (Recommended)
+### Single Command Start (Recommended)
 
 ```bash
 ./start.sh
 ```
 
-This starts both backend and frontend automatically.
+This starts a unified server that serves both the frontend and backend API on port 8080.
 
-### Option 2: Manual Start
-
-#### Backend
+### Manual Start
 
 ```bash
 cd backend
-uv venv
 source .venv/bin/activate
-uv pip install -e ".[dev]"
-
-uvicorn app.api:app --reload --port 8001
+uvicorn app.api:app --reload --port 8080
 ```
 
-#### Frontend
+Visit http://localhost:8080 to access the platform.
 
+**Note:** The frontend must be built once before first use:
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run build
 ```
-
-Visit http://localhost:3000 to access the platform.
 
 ## Usage
 
@@ -120,19 +114,22 @@ POST /api/graph/extract
 
 ## Current Status
 
-✅ **Backend API** - FastAPI server with graph operations (11/11 tests passing)
-✅ **Frontend UI** - React dashboard with graph visualization (TypeScript: 0 errors)
-✅ **Knowledge Graph** - Built from project code (66,706 nodes, 86,502 edges)
+✅ **Unified Server** - Single FastAPI server serving both frontend & API (port 8080)
+✅ **Backend API** - All 11 tests passing
+✅ **Frontend UI** - React dashboard (TypeScript: 0 errors)
+✅ **Knowledge Graph** - 66,706 nodes, 86,502 edges extracted
 ✅ **Interactive Visualization** - Force-directed graph with search
 ✅ **Community Detection** - Cluster analysis with cohesion scores
-✅ **God Node Analysis** - Identify key concepts (optimized for large graphs)
-✅ **Production Build** - Frontend builds successfully (454KB gzipped)
-✅ **API Tests** - Comprehensive test suite covering all endpoints
+✅ **God Node Analysis** - Optimized for large graphs (degree-based ranking)
+✅ **Production Ready** - Frontend built (454KB JS, 15KB CSS)
 
-🔄 **Future Enhancements**
-- Semantic search with embeddings
-- Cross-repository pattern extraction
-- Auto-generated documentation
+## Architecture
+
+**Single Server Design:**
+- FastAPI serves both frontend static files and API endpoints
+- No separate frontend dev server needed
+- Simplified deployment: one process, one port
+- SPA routing handled by FastAPI fallback
 
 ## Development
 
