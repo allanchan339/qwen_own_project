@@ -26,6 +26,9 @@ Mixing hardware is never be a good idea as even a small calculation different in
 To perform this test, I ask this LLM to build whatever he want with $10000 token budget. Surprisingly once LLM start to run, it is unstopped for 18mins. Therefore, I decided to help him by providing issue i see. This repo is what he build eventually. 
 <img width="1066" height="1235" alt="image" src="https://github.com/user-attachments/assets/df9fcee3-cc99-432c-9a4b-426a150883b4" />
 
+### Results
+The LLM Qwen3.5-27B now reliabily to perform agentic task while preserving thinking (reasoning) ability. This make Qwen3.5-27B is the SOTA model for consumer grade hardware (2*3090, 2*4090 or 1*4090 48GB or equvilant RAM in Mac)
+For trail i made, please refer to https://github.com/allanchan339/vllm-qwen3.5-27B for the debug effort paid and solution.
 ## Features
 
 - 🧠 **Knowledge Graph Extraction** - Automatically extract entities, relationships, and patterns from code
