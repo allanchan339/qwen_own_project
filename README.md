@@ -2,6 +2,8 @@
 
 AI-powered developer knowledge platform that transforms codebases into navigable knowledge graphs.
 
+> 💰 **Development Cost:** 138.2k tokens over 1h 9m - [View conversation log](log.md)
+
 ## Features
 
 - 🧠 **Knowledge Graph Extraction** - Automatically extract entities, relationships, and patterns from code
