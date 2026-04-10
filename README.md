@@ -1,8 +1,30 @@
 # Knowledge Platform
-
 AI-powered developer knowledge platform that transforms codebases into navigable knowledge graphs.
+<img width="1655" height="917" alt="image" src="https://github.com/user-attachments/assets/5e399705-6100-41f7-a23f-b51919b1902c" />
 
 > 💰 **Development Cost:** 138.2k tokens over 1h 9m - [View conversation log](log.md)
+
+## Background of this project
+This was a stability test for Qwen3.5-27B for tool calling, long context agentic work, and reasoning ability. 
+
+### Why this test matter
+This is a test to see if my hardware will drift the model output (mixed GPUs, see https://github.com/allanchan339/vllm-qwen3.5-27B for details) and error introduced due to quantization. Also, tool calling issue is a unsolved problem that hidder self-hosted LLM user reliably to do agentic work. A [reddit post](https://www.reddit.com/r/LocalLLaMA/comments/1sdhvc5/qwen_35_tool_calling_fixes_for_agentic_use_whats/) dissued this. Apart from it, numbers of PR is pending to merge in vllm, sglang, or llama.cpp e.g. https://github.com/QwenLM/Qwen3/issues/1831, https://github.com/vllm-project/vllm/issues/38885, https://github.com/vllm-project/vllm/pull/38996, https://github.com/vllm-project/vllm/pull/33965, https://github.com/vllm-project/vllm/issues/35266, and etc.
+
+
+### Hardware setting
+- RTX 3090 24GB (SM80)
+- RTX 4090 24GB (SM89)
+
+Mixing hardware is never be a good idea as even a small calculation different in awq_marlin and propagate error in causal LM (looping will drift the error even bigger and thus collapse the conversation session), see https://github.com/vllm-project/vllm/issues/34437 for detail. But these cards are all i have. 
+
+### Testing Environment
+- vllm=0.19.0
+- transformers=5.5
+- cuda=12.8
+- opencode 1.3.17 with [graphify](https://github.com/safishamsi/graphify) 0.3.12 and [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim) 0.9.5
+
+To perform this test, I ask this LLM to build whatever he want with $10000 token budget. Surprisingly once LLM start to run, it is unstopped for 18mins. Therefore, I decided to help him by providing issue i see. This repo is what he build eventually. 
+<img width="1066" height="1235" alt="image" src="https://github.com/user-attachments/assets/df9fcee3-cc99-432c-9a4b-426a150883b4" />
 
 ## Features
 
